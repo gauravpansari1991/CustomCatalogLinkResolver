@@ -17,24 +17,6 @@ namespace Sitecore.Commerce.Foundation.CustomCatalogLinkResolver.Extensions
 {
     public static class ItemExtensions
     {
-        public static bool HasLayout(this Item item)
-        {
-            if (item != null)
-            {
-                return item.Fields[Sitecore.FieldIDs.LayoutField] != null
-                       && !String.IsNullOrEmpty(item.Fields[Sitecore.FieldIDs.LayoutField].Value);
-            }
-
-            return false;
-        }
-
-        public static Item GetItem(this string Id)
-        {
-            Database database = Sitecore.Context.Database;
-            var item = database.GetItem(Id);
-            return item;
-        }     
-
         public static Item GetSettingsItem(this Item contextItem)
         {
             return ServiceLocator.ServiceProvider.GetService<IMultisiteContext>().GetSettingsItem(contextItem);
@@ -62,57 +44,9 @@ namespace Sitecore.Commerce.Foundation.CustomCatalogLinkResolver.Extensions
             return null;
         }
 
-        public static Item GetSiteRoot()
-        {
-            if (Sitecore.Context.Database != null || Sitecore.Context.Site != null)
-            {
-                return Sitecore.Context.Database.GetItem(Sitecore.Context.Site.RootPath);
-            }
-
-            return null;
-        }        
-
-        public static string GetSettingsFieldValue(string fieldName)
-        {
-            var contextItem = GetSiteRootItem();
-            var settingsItem = contextItem?.GetSettingsItem();
-            Field field = settingsItem?.Fields[fieldName];
-
-            if (field != null)
-                return field.Value;
-            return String.Empty;
-        }
-
-        public static string GetSettingsFieldValue(Sitecore.Data.ID fieldId)
-        {
-            var contextItem = GetSiteRootItem();
-            var settingsItem = contextItem.GetSettingsItem();
-            Field field = settingsItem?.Fields[fieldId];
-
-            if (field != null)
-                return field.Value;
-            return String.Empty;
-        }       
-
-        public static bool IsOrInherits(this Template template, ID templateId)
-        {
-            return template.ID == templateId || template.GetBaseTemplates().Any(baseTemplate => IsOrInherits(baseTemplate, templateId));
-        }
-
-        public static bool IsOrInherits(this Item item, ID templateId)
-        {
-            return TemplateManager.GetTemplate(item).IsOrInherits(templateId);
-        }
-
-        public static IEnumerable<Item> GetChildrenByTemplateInheritance(this Item item, ID templateId)
-        {
-            return item.GetChildren().Where(c => c.IsOrInherits(templateId));
-        }
-
         public static Item GetItemById(this string id, Database database = null, Language language = null)
         {
-            var guid = ConvertToGuidNullable(id, null);
-            if (guid.HasValue)
+            if (!string.IsNullOrWhiteSpace(id))
             {
                 return Sitecore.Context.Database.GetItem(Sitecore.Data.ID.Parse(id));
             }
@@ -132,15 +66,6 @@ namespace Sitecore.Commerce.Foundation.CustomCatalogLinkResolver.Extensions
                 }
             }
             return null;
-        }
-
-        public static Guid? ConvertToGuidNullable(this string value, Guid? defaultValue)
-        {
-            if (Guid.TryParse(value, out var result))
-            {
-                return result;
-            }
-            return defaultValue;
         }
 
         public static Item GetItem(this Guid? id, string databaseName, Language language = null)

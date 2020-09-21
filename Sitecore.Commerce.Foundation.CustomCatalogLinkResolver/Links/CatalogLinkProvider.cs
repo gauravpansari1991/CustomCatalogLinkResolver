@@ -43,19 +43,7 @@ namespace Sitecore.Commerce.Foundation.CustomCatalogLinkResolver.Links
             var catalogRootItem = this.Repository.GetCatalogRootItem(item);
             options.UseDisplayName = true;
 
-            var rootitemurl = string.Empty;
-
-            //if (itemType == Sitecore.Commerce.XA.Foundation.Common.Constants.ItemTypes.Product)
-            //{
-            //    var url = item[Constants.ProductField.CanonicalUrl];
-            //    if (!string.IsNullOrEmpty(url))
-            //    {
-            //        //options.AlwaysIncludeServerUrl = true;
-            //        rootitemurl = catalogRootItem != null ? base.GetItemUrl(catalogRootItem, options) : string.Empty;
-            //        var result = $"{rootitemurl.TrimEnd('/')}/{url.TrimStart('/')}";
-            //        return options.LowercaseUrls ? result.ToLower() : string.Empty;
-            //    }
-            //}
+            var rootitemurl = string.Empty;            
 
             if (itemType == Sitecore.Commerce.XA.Foundation.Common.Constants.ItemTypes.Category || itemType == Sitecore.Commerce.XA.Foundation.Common.Constants.ItemTypes.Product)
             {
@@ -84,7 +72,7 @@ namespace Sitecore.Commerce.Foundation.CustomCatalogLinkResolver.Links
             if (item == null || item.Parent == null)
                 return null;
 
-            if (item.Parent.TemplateID.ToString().Equals("{93AF861A-B6F4-45BE-887D-D93D4B95B39D}"))
+            if (item.Parent.TemplateID.ToString().Equals(Sitecore.Commerce.Foundation.CustomCatalogLinkResolver.Constants.TemplateID.CommerceCatalog))
             {
                 return item.Parent;
             }

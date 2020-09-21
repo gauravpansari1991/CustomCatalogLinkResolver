@@ -41,7 +41,7 @@ namespace Sitecore.Commerce.Foundation.CustomCatalogLinkResolver.Repositories
                 return null;
             }
 
-            var rootItemField = settingsItem.Fields["Catalog Root Item"]; //TODO: need to create field on setting item
+            var rootItemField = settingsItem.Fields[Sitecore.Commerce.Foundation.CustomCatalogLinkResolver.Constants.FieldName.CatalogRootItem];
 
             if (rootItemField != null)
             {
@@ -55,17 +55,5 @@ namespace Sitecore.Commerce.Foundation.CustomCatalogLinkResolver.Repositories
 
             return null;
         }
-
-        //private Item GetSiteRootItem(Item item)
-        //{
-        //    var siteInfo = this.siteInfoResolver.GetSiteInfo(item);
-        //    if (siteInfo != null)
-        //    {
-        //        var homeItemPath = string.Concat(siteInfo.RootPath, siteInfo.StartItem);
-
-        //        return homeItemPath.GetItemByPath(item.Database);
-        //    }
-        //    return null;
-        //}
     }
 }

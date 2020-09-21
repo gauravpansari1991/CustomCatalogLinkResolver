@@ -10,6 +10,7 @@ namespace Sitecore.Commerce.Foundation.CustomCatalogLinkResolver
         public static class FieldName
         {
             public const string CatalogRootItem = "Catalog Root Item";
+            public const string LinkField = "Link";
         }
 
         public static class TemplateID

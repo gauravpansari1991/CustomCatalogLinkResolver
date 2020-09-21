@@ -133,7 +133,7 @@ namespace Sitecore.Commerce.Foundation.CustomCatalogLinkResolver.Extensions
 
         public static string GetCommerceItemUrl(this Item item)
         {
-            var linkField = item.Fields["Link"];
+            var linkField = item.Fields[Sitecore.Commerce.Foundation.CustomCatalogLinkResolver.Constants.FieldName.LinkField];
             if (linkField != null)
             {
                 var categoryUrl = item.LinkFieldUrl(linkField.ID);
